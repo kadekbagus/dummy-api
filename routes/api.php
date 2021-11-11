@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\Person;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +17,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+Route::get('person', function() {
+    return Person::get();
+});
+
+Route::post('person', function(Request $request) {
+    $newPerson = null;
+    if (isset($request->first_name)) {
+        $newPerson = new Person();
+        $newPerson->first_name = $request->first_name;
+        $newPerson->last_name = $request->last_name;
+        $newPerson->gender = $request->gender;
+        $newPerson->age = $request->age;
+        $newPerson->email = $request->email;
+        $newPerson->save();
+    }
+
+    return $newPerson;
 });
