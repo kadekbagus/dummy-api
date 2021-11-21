@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Models\Person;
+use App\Http\Controllers\PersonAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,21 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::get('person', function() {
-    return Person::get();
-});
-
-Route::post('person', function(Request $request) {
-    $newPerson = null;
-    if (isset($request->first_name)) {
-        $newPerson = new Person();
-        $newPerson->first_name = $request->first_name;
-        $newPerson->last_name = $request->last_name;
-        $newPerson->gender = $request->gender;
-        $newPerson->age = $request->age;
-        $newPerson->email = $request->email;
-        $newPerson->save();
-    }
-
-    return $newPerson;
-});
+Route::get('person/list', [PersonAPIController::class, 'index']);
+Route::get('person/detail/{id}', [PersonAPIController::class, 'show']);
+Route::post('person/create', [PersonAPIController::class, 'store']);
+Route::put('person/update', [PersonAPIController::class, 'update']);

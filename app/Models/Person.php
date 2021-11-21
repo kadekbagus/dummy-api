@@ -10,4 +10,6 @@ class Person extends Model
     use HasFactory;
 
     protected $table = 'persons';
+
+    protected $primaryKey = 'id_person';
 }
